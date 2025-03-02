@@ -2,63 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from pprint import pprint
-
-data = pd.read_parquet('data_BM01P1_hits.parquet')      # hity v hodoskope
-
-def make_names(len_names):
-    i = 0
-    j = 0
-    cnt = 0
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # len = 26
-    names = []
-    while True:
-        while j < len(abc):
-            name = abc[i]+abc[j]
-            names.append(name)
-            cnt += 1
-            j += 1
-            if cnt == len_names:
-                return names
-        i += 1 
-        j = 0 
-
-def num_to_name(num) -> str:
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    first = abc[int(num / len(abc))]
-    second = abc[(num % len(abc)) - 1]
-    return first + second
-
-def modify_dataset(df, names):
-    
-    dataset_tmp = {}
-    for col in df.columns:
-        dataset_tmp[names[col]] = df[col].values
-
-    df = pd.DataFrame(dataset_tmp)
-    return df
-
-def plothist(num):
-    idxs = [i for i in range(20)]
-    plt.bar(idxs, data.T[num], width=0.8)
-    plt.gca().set_xticks(np.arange(0, 19 + 1, 1))
-    plt.show()
-
-def normalize(vec):
-    top = max(vec)
-    for i in range(len(vec)):
-        vec[i] = vec[i]/top
-    return vec
-
-dataset = {}
-
-for i in range(len(data.values)):
-    dataset[i] = normalize(data.T[i])
-
-norm_data = pd.DataFrame(data=dataset)
-
-names = make_names(len(data))
-norm_data = modify_dataset(norm_data, names)     # v tomto formáte dataset konečne funguje (neodporúčam sa chytať ničoho, čo je vyššie)
-norm_data = norm_data.T
+from ready_data import data, norm_data, plothist
 
 def dist(ptA, ptB):
     return np.linalg.norm(ptA-ptB)
@@ -122,7 +66,9 @@ def plot_graphs_for_boundaries():
         plt.xlabel('k')
         plt.ylabel('# outliers')
         plt.show()
-
+avg_distances = calculate_avg_distances(norm_data, 64)
+mean = avg(avg_distances)
+deviations = [abs(d-mean) for d in avg_distances]       # list of measure of outlierness
 if __name__ == '__main__':
     
     avg_distances = calculate_avg_distances(norm_data, 64)
@@ -136,11 +82,3 @@ if __name__ == '__main__':
     
     n_outliers = sum([1 for i in deviations if i>=0.2])
     print(f'Found {n_outliers} outliers.')
-
-    while True:
-        if not plot_desired_graph():
-            break
-    
-    # plot_graphs_for_boundaries()
-
-    exit()
