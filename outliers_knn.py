@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from pprint import pprint
 from ready_data import data, norm_data, plothist
 
+norm_data = norm_data.T
 def dist(ptA, ptB):
     return np.linalg.norm(ptA-ptB)
 
@@ -66,9 +67,11 @@ def plot_graphs_for_boundaries():
         plt.xlabel('k')
         plt.ylabel('# outliers')
         plt.show()
+
 avg_distances = calculate_avg_distances(norm_data, 64)
 mean = avg(avg_distances)
 deviations = [abs(d-mean) for d in avg_distances]       # list of measure of outlierness
+
 if __name__ == '__main__':
     
     avg_distances = calculate_avg_distances(norm_data, 64)

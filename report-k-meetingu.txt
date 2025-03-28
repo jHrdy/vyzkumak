@@ -1,0 +1,4 @@
+Subory hits a ch davaju vysledky takmer 1:1
+subor t je ale najzaujimavejsi
+Vymyslel som novy sposob ako klasifikovat pomocou knn, jedna sa o kombinaciu knn a kmeans vdaka comu dostavame
+neparametricku metodu pre hladanie outlierov (parameter 'n' je pri outlieroch fixnuty na 2)

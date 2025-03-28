@@ -1,7 +1,11 @@
 from sklearn.svm import OneClassSVM
 from ready_data import norm_data
 import matplotlib.pyplot as plt
-from LOF_outliers import idxs
+
+norm_data = norm_data.T
+
+def idxs(iterable):
+    return [i for i in range(len(iterable))]
 
 svm = OneClassSVM(gamma="auto").fit(norm_data)
 svm.predict(norm_data)
