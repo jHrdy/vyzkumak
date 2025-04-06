@@ -1,5 +1,8 @@
+# command line application that plots histograms of the data
+# !!! Currently implemented only for n_bin = 20 (thus wont work for any other types of histograms)
+
 import matplotlib.pyplot as plt
-from ready_data import norm_data
+from ready_data import norm_data, data
 
 def plot_hist(hist_num):
 
@@ -7,7 +10,7 @@ def plot_hist(hist_num):
         return False
     
     plt.figure(figsize=(10, 5))
-    plt.bar(x:=range(20), norm_data[hist_num], color='blue', alpha=0.7)
+    plt.bar(x:=range(20), data[hist_num], color='blue', alpha=0.7)
 
     plt.xlabel("Bin")
     plt.ylabel("Value")
@@ -20,6 +23,7 @@ def plot_hist(hist_num):
 
 if __name__ == "__main__":
     print(f'Keep entering integers in range 0 to {len(norm_data.T)}, to exit input negative integer')
+
     while True:
        if plot_hist(int(input("Type number of desired histogram: "))):
            continue

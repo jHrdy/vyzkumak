@@ -4,7 +4,9 @@ from sklearn.preprocessing import MinMaxScaler
 
 np.random.seed(42)
 
-data = np.random.gamma(1,size=200)
+#data = np.random.gamma(1,size=200)
+outlier_free_data = np.random.gamma(1,size=200)
+data = outlier_free_data[(outlier_free_data < 0.25) & (outlier_free_data < 0.05)]
 #data = np.random.pareto(a=1.5, size=200)
 #data = np.random.pareto(a=4, size=200)
 #data = np.random.pareto(a=7, size=200)    
