@@ -12,7 +12,7 @@ import os
 
 datafiles = os.listdir('data/bm')
 file = 1
-olddata = pd.read_parquet('old_data_BM01P1_hits.parquet')  # hity v hodoskope
+olddata = pd.read_parquet(os.path.join('data','bm','old_data_BM01P1_hits.parquet'))  # hity v hodoskope
 
 def plothist(data, num):
     idxs = [i for i in range(len(data))]
@@ -45,7 +45,7 @@ def get_artifficial_dataset():
                             len(data.T) + 2 : np.array([1 for _ in range(20)]),})
 
     artifficial_data = norm(pd.concat((artifficial_data, fake_data), axis=1))
-    print("You are using artifficial dataset")
+    print(f"You are using artifficial dataset. Last {len(fake_data.keys())} columns are fake.")
     
     return artifficial_data.T
 

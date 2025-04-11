@@ -16,17 +16,17 @@ there are multiple datasets for testing
 !! Dataset is imported in outliers_sklearn_knn 
 (deviations are derived from it)"""
 
-# TESTING values
-"""dataset.append(12)
+# TESTING values that are appended to deviations (in this script called dataset)
+'''dataset.append(12)
 dataset.append(11)
-dataset.append(14)
+dataset.append(14)'''
 dataset.append(0.95)
 dataset.append(0.97)
 dataset.append(0.9)
 dataset.append(0.89)
 dataset.append(0.93)
 dataset.append(0.85)
-dataset.append(0.91)"""
+dataset.append(0.91)
 
 def idxs(iterable):
     return [i for i in range(len(iterable))]
@@ -50,6 +50,8 @@ decision_boundary = (clusters[1]-clusters[0])/2
 
 outliers_cycle = {}
 
+n_epochs = 1
+
 while decision_boundary > 1:
     data_wo_outliers = {}
     for idx, (pt, label) in enumerate(zip(dataset, labels)):
@@ -65,8 +67,10 @@ while decision_boundary > 1:
     
     clusters = means.cluster_centers_
     decision_boundary = (clusters[1]-clusters[0])/2 
-    print(f'clusters: {clusters} | dec_b = {decision_boundary}')
+    #print(f'clusters: {clusters} | dec_b = {decision_boundary}')
+    n_epochs += 1
 
+print(f"Script executed in {n_epochs} epochs")
 dataset_np = np.array([x for x in dataset])
 
 outs = [dataset.index(outlier) for outlier in dataset_np[dataset > decision_boundary]]
