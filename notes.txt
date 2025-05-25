@@ -1,0 +1,4 @@
+ready_data - produces 1d data normalized and transposed (variable: norm_data)
+ready_proj_data - produces normalized and transposed projection of 2d data (variable: norm_data_2d)
+OCSVM fixed - works with all 1d and 2d data (interesting results for projection data)
+outliers_sklearn_knn - works with all 1d and 2d data

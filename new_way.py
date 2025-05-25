@@ -27,6 +27,7 @@ dataset.append(0.89)
 dataset.append(0.93)
 dataset.append(0.85)
 dataset.append(0.91)
+print("Last deviations are examplary")
 
 def idxs(iterable):
     return [i for i in range(len(iterable))]

@@ -3,11 +3,12 @@
 
 import matplotlib.pyplot as plt
 from ready_data import norm_data, data
+from ready_proj_data import norm_data_2d as data
 
 def plot_hist(hist_num):
 
     if hist_num < 0:
-        return False
+       return False
     
     plt.figure(figsize=(10, 5))
     plt.bar(x:=range(20), data[hist_num], color='blue', alpha=0.7)

@@ -9,8 +9,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pprint import pprint
 import os
+from sklearn.preprocessing import MinMaxScaler
 
 datafiles = os.listdir('data/bm')
+
 file = 1
 olddata = pd.read_parquet(os.path.join('data','bm','old_data_BM01P1_hits.parquet'))  # hity v hodoskope
 
@@ -28,9 +30,11 @@ data_cp = data.copy()
 
 # artifficial data currently works only for data_BM01P1_hits.parquet
 # RESOLVE: norm (function) crashes when inserted data point is zeros(N) -- temporary solution implemented
+#       - resolution: MinMaxScaler implemented norm function not necessary (but don't delete)
 
+# in order not to messup tests with artifficial dataset let's not yet delete norm function
 def norm(data):
-    for col in range(len(data.T)):
+    for col in range(len(data.T)):    
         top = max(data[col])        # temporary solution
         if top == 0:
             continue
@@ -39,6 +43,7 @@ def norm(data):
     return data
 
 def get_artifficial_dataset():
+    # works only for datasets with n_bins = 20
     artifficial_data = data_cp.copy()
     fake_data = pd.DataFrame({len(data.T) : np.array([0,1] + [0 for _ in range(18)]),
                             len(data.T) + 1 : np.array([0 for _ in range(20)]),
@@ -49,8 +54,11 @@ def get_artifficial_dataset():
     
     return artifficial_data.T
 
-norm_data = norm(data_cp)
+scaler = MinMaxScaler()
+norm_data = scaler.fit_transform(data)
+
+norm_data = norm_data.T
 print('Working with', datafiles[file])
 
 if __name__ == '__main__':
-    pass
+    print(norm_data[0])
