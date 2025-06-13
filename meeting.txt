@@ -1,0 +1,5 @@
+implementacia DBscan
+PyCaret
+kurz na Coursere
+ako chceme validovat modely - siel by som do realnych datasetov 
+	- pouzil modely ktore uz mam a skusil o nich na zaklade vyaledkov nieco povedat

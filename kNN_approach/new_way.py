@@ -19,7 +19,7 @@ there are multiple datasets for testing
 # TESTING values that are appended to deviations (in this script called dataset)
 '''dataset.append(12)
 dataset.append(11)
-dataset.append(14)'''
+dataset.append(14)
 dataset.append(0.95)
 dataset.append(0.97)
 dataset.append(0.9)
@@ -28,12 +28,13 @@ dataset.append(0.93)
 dataset.append(0.85)
 dataset.append(0.91)
 print("Last deviations are examplary")
-
+'''
 def idxs(iterable):
     return [i for i in range(len(iterable))]
 
 means = KMeans(n_clusters=2, init='k-means++', random_state=42)
 labels = means.fit_predict(np.array(dataset).reshape(-1, 1))
+
 
 print(clusters := means.cluster_centers_)
 

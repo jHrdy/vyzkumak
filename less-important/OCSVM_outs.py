@@ -8,8 +8,8 @@ parent_dir = current_dir.parent
 
 sys.path.append(str(parent_dir))
 
-#from ready_data import norm_data
-from ready_proj_data import norm_data_2d as norm_data
+from ready_data import norm_data
+#from ready_proj_data import norm_data_2d as norm_data
 
 def idxs(iterable):
     return [i for i in range(len(iterable))]

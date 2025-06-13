@@ -3,7 +3,7 @@
 
 import matplotlib.pyplot as plt
 from ready_data import norm_data, data
-from ready_proj_data import norm_data_2d as data
+#from ready_proj_data import norm_data_2d as data
 
 def plot_hist(hist_num):
 

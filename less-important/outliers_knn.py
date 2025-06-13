@@ -1,10 +1,18 @@
+import sys
+from pathlib import Path
+
+current_dir = Path(__file__).resolve().parent
+parent_dir = current_dir.parent
+
+sys.path.append(str(parent_dir))
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from pprint import pprint
 from ready_data import data, norm_data, plothist
 
-norm_data = norm_data.T
+#norm_data = norm_data.T
 def dist(ptA, ptB):
     return np.linalg.norm(ptA-ptB)
 
@@ -16,8 +24,8 @@ def calculate_avg_distances(test_dataset, k):
     temp_distances = []
     average_distances = []
 
-    for ptA in test_dataset.values:
-        for ptB in test_dataset.values:
+    for ptA in test_dataset:
+        for ptB in test_dataset:
             if not ptA is ptB:
                 temp_distances.append(dist(ptA, ptB))
         temp_distances.sort()

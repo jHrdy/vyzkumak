@@ -1,0 +1,27 @@
+<< // STH ABOUT DATA \\ >>
+
+Very first approach to detecting anomalies was calculating so called deviances within the dataset, 
+this approach is derived from k nearest neighbours but does not require labeled data, as the main goal 
+of identifying BAD DATA without previous knowledge of expected results. This creates one of the 
+main bottlenecks in classification and following paragraphs will also discuss option in which the dataset 
+consists of small number of outliers.
+
+Mentioned kNN approach, firstly finds k nearest neighbours for each point in the dataset and calculates 
+distance to each neighbor. Each point in dataset is thus assigned k-dimensional vector consisting of distances.
+In next step algorithm calculates mean value for each vector of distances. Afterwards we compute mean of this
+distribution of vector means $di_mean \forall i in {1...len(data)}$, by which we have set a mean value for the entire dataset.
+To classify each point as a outlier or not, algorithm iterates through dataset and calculates an absolute difference
+between each $di_mean$. Let's call this distance deviation.
+
+(CLT may suggest that avg_distances follows Normal distribution, but according to Kolmogorov-Smirnov test it does not)
+
+POTOM SPOCITAME DALSI PRIEMER 
+POTOM POCITAME ABSOLUTNU VZDIALENOST OD TOHOTO SPOLOCNEHO PRIEMERU
+
+
+
+Co ma napada:
+ - vysvetlit preco je k == len(dataset)
+ - vyskusat rozne metriky - naplotovat grafy
+ - otestovat na nejakom public datasete
+ - skusit spocitat inu statistiku miesto priemeru (median ?) neviem aku 
