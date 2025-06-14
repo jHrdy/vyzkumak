@@ -19,7 +19,8 @@ from metrics import capped_metric
 
 #norm_data = get_artifficial_dataset()
 
-neigh = NearestNeighbors(n_neighbors=len(norm_data)) #, metric=capped_metric
+#neigh = NearestNeighbors(n_neighbors=len(norm_data), metric=capped_metric) 
+neigh = NearestNeighbors(n_neighbors=len(norm_data)) 
 neigh.fit(norm_data)
 
 neighborhood = []
@@ -35,17 +36,39 @@ avg_distances_copy = avg_distances.copy()
 
 mean = np.mean(avg_distances)
 
-deviations = [abs(d-mean) for d in avg_distances]
+deviations = [abs(d-mean) for d in avg_distances]  
 
-# print(norm_data.iloc[-2:])      # used for printing last two columns of artifficial dataset  
-
-# !!!!!!!!
-# Plot graph of number of outliers for each k (0-max) and insert to latex
-# !!!!!!!!
 
 if __name__ == '__main__':
     plt.scatter(range(len(deviations)), deviations)
-    #plt.scatter([i for i in range(len(deviations)], deviations))
     plt.title("Calculated deviations")
-    #plt.grid(True)
+    plt.show()
+    
+    outliers = []
+    for k in range(1,len(norm_data)):
+        neigh = NearestNeighbors(n_neighbors=k) 
+        neigh.fit(norm_data)
+
+        neighborhood = []
+
+        for d in norm_data:
+            # data is returned as 2dim array => we want : from 1dim and leave out element 0 from 2nd dimension as is refers to data point itself
+            # neighborhood.append(neigh.kneighbors([d], return_distance=False)[:,1:])         
+            dist, _ = neigh.kneighbors([d], return_distance=True)
+            neighborhood.append(dist)
+
+        avg_distances = [np.mean(dist) for dist in neighborhood]
+        avg_distances_copy = avg_distances.copy()
+
+        mean = np.mean(avg_distances)
+
+        deviations = [abs(d-mean) for d in avg_distances]
+        outliers.append(outs := sum([1 for dev in deviations if dev > 0.12]))
+        print(outs)
+
+    plt.title("Number of outliers per k with decision border = 0.12")
+    plt.xlabel('k')
+    plt.ylabel('Number of outliers')
+    plt.plot(range(len(outliers)), outliers)
+    plt.grid(1)
     plt.show()
