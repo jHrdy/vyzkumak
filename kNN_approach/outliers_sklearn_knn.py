@@ -4,20 +4,20 @@
 
 from pathlib import Path
 import sys
+
 current_dir = Path(__file__).resolve().parent
 parent_dir = current_dir.parent
 sys.path.append(str(parent_dir))
 
-from sklearn.neighbors import NearestNeighbors
 from ready_data import norm_data
+from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import matplotlib.pyplot as plt
 from metrics import capped_metric
+import plotting_styles as style
 
 #from ready_proj_data import norm_data_2d as norm_data
 #from ready_data import get_artifficial_dataset   # used for testing - call with no params a function to create dataset with 2 fake cols
-
-#norm_data = get_artifficial_dataset()
 
 #neigh = NearestNeighbors(n_neighbors=len(norm_data), metric=capped_metric) 
 neigh = NearestNeighbors(n_neighbors=len(norm_data)) 
@@ -38,12 +38,16 @@ mean = np.mean(avg_distances)
 
 deviations = [abs(d-mean) for d in avg_distances]  
 
-
 if __name__ == '__main__':
-    plt.scatter(range(len(deviations)), deviations)
+    style.apply_global_style()
+    plt.scatter(range(len(deviations)), deviations, **style.scatter_style)
     plt.title("Calculated deviations")
+    plt.xlabel("Histogram index")
+    plt.ylabel("Deviation")
     plt.show()
-    
+    exit()
+
+    # following code plots outlier count per k parameter
     outliers = []
     for k in range(1,len(norm_data)):
         neigh = NearestNeighbors(n_neighbors=k) 

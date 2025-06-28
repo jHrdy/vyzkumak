@@ -19,7 +19,6 @@ POTOM SPOCITAME DALSI PRIEMER
 POTOM POCITAME ABSOLUTNU VZDIALENOST OD TOHOTO SPOLOCNEHO PRIEMERU
 
 
-
 Co ma napada:
  - vysvetlit preco je k == len(dataset)
  - vyskusat rozne metriky - naplotovat grafy

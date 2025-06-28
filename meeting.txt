@@ -1,5 +1,6 @@
-implementacia DBscan
-PyCaret
-kurz na Coursere
+implementacia DBscan - ten ale priamo vracia hodnoty 0, -1 urcite by som to pouzil ale nakonci dna to vela nehovori
+(Ak je cas mozeme sa pozriet na ploty)
+PyCaret (mozno pouzit este som neskusal)
+kurz na Coursere - fajn teoria mam nejake zapisky
 ako chceme validovat modely - siel by som do realnych datasetov 
 	- pouzil modely ktore uz mam a skusil o nich na zaklade vyaledkov nieco povedat
