@@ -1,6 +1,6 @@
 scatter_style = {
     "s": 60,
-    "color": 'royalblue',   #"blue", #navy
+    #"color": 'royalblue',   #"blue", #navy
     "alpha": 0.85,
     "cmap": "viridis",
     "zorder": 2

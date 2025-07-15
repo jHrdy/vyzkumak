@@ -20,14 +20,13 @@ there are multiple datasets for testing
 '''dataset.append(12)
 dataset.append(11)
 dataset.append(14)
-'''
 dataset.append(0.95)
 dataset.append(0.97)
 dataset.append(0.9)
 dataset.append(0.89)
 dataset.append(0.93)
 dataset.append(0.85)
-dataset.append(0.91)
+dataset.append(0.91)'''
 print("Last deviations are examplary")
 
 means = KMeans(n_clusters=2, init='k-means++', random_state=42)
@@ -74,16 +73,22 @@ dataset_np = np.array([x for x in dataset])
 outs = [dataset.index(outlier) for outlier in dataset_np[dataset > decision_boundary]]
 print(f"Outliers: {outs}")
 
+import plotting_styles as style
 for idx, pt in enumerate(dataset):
     if pt >= decision_boundary:
-        plt.scatter(idx, pt, color='red')        
+        plt.scatter(idx, pt, color='red', **style.scatter_style)        
     else:
-        plt.scatter(idx, pt, color='green')        
+        plt.scatter(idx, pt, color='green', **style.scatter_style)        
 
-plt.title("Data and outliers separated")
-plt.plot(np.array([decision_boundary for _ in range(len(dataset))]), linestyle='dashed')
+#plt.title("Data and outliers separated")
+#plt.plot(np.array([decision_boundary for _ in range(len(dataset))]), linestyle='dashed')
+#plt.show()
+#plt.scatter(range(len(dataset)), dataset, **style.scatter_style)
+#plt.axhline(y=0.4, color='seagreen', linestyle='--', linewidth=1.95)
+plt.title("Calculated deviations with decition boundary")
+plt.xlabel("Histogram index")
+plt.ylabel("Deviation")
 plt.show()
-
 
 """
 Nemá asi veľký zmysel plotovať decision boundary, pre jednodimenzionálne dáta.

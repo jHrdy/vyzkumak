@@ -13,7 +13,7 @@ from ready_data import norm_data
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import matplotlib.pyplot as plt
-from metrics import capped_metric
+from metrics import capped_metric, manhattan_metric
 import plotting_styles as style
 
 #from ready_proj_data import norm_data_2d as norm_data
@@ -39,9 +39,13 @@ mean = np.mean(avg_distances)
 deviations = [abs(d-mean) for d in avg_distances]  
 
 if __name__ == '__main__':
+    # Std when using default metric     0.09005959896056492
+    # Std when using manhattan          0.17156017223782447
+    print(f"Variance of the deviations: {np.std(deviations)}")
     style.apply_global_style()
     plt.scatter(range(len(deviations)), deviations, **style.scatter_style)
-    plt.title("Calculated deviations")
+    plt.axhline(y=0.4, color='seagreen', linestyle='--', linewidth=1.95)
+    plt.title("Calculated deviations with decition boundary")
     plt.xlabel("Histogram index")
     plt.ylabel("Deviation")
     plt.show()
