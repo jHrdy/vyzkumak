@@ -37,14 +37,26 @@ def apply_global_style():
 
 if __name__ == '__main__':
     
-    import numpy as np
     import matplotlib.pyplot as plt
-    x, y = np.random.randn(2, 50), np.random.randn(2, 50)
 
-    apply_global_style()
-    #distances = np.array([1.2, 2.5, 0.9, 3.1])
-    #x = np.arange(len(distances))
-    #labels = [f'Bod {i}' for i in x]
+    # Data points
+    x = [1, 1.6, 1.4, 0.7]
+    x1 = [3, 2.5, 2.1, 3.7]
+    y_square = [1, 4.7, 4, 6]
+    y_triangle = [2, 6, 4.8, 6.5]
 
-    plt.scatter(x, y, **scatter_style)
+    # Plotting squared points
+    plt.scatter(x, y_square, color='blue', marker='s', label='Squares')
+
+    # Plotting triangled points
+    plt.scatter(x1, y_triangle, color='red', marker='^', label='Triangles')
+
+    # Adding labels and legend
+    plt.xlabel('X-axis')
+    plt.ylabel('Y-axis')
+    plt.title('Squared and Triangled Points')
+    plt.legend()
+
+    # Show the plot
     plt.show()
+

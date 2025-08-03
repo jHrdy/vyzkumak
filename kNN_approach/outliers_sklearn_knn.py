@@ -13,14 +13,14 @@ from ready_data import norm_data
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import matplotlib.pyplot as plt
-from metrics import capped_metric, manhattan_metric
+from metrics import capped_metric, manhattan_metric, sigmoid_metric
 import plotting_styles as style
 
 #from ready_proj_data import norm_data_2d as norm_data
 #from ready_data import get_artifficial_dataset   # used for testing - call with no params a function to create dataset with 2 fake cols
 
-#neigh = NearestNeighbors(n_neighbors=len(norm_data), metric=capped_metric) 
-neigh = NearestNeighbors(n_neighbors=len(norm_data)) 
+neigh = NearestNeighbors(n_neighbors=len(norm_data), metric=capped_metric) 
+#neigh = NearestNeighbors(n_neighbors=len(norm_data)) 
 neigh.fit(norm_data)
 
 neighborhood = []
@@ -44,8 +44,8 @@ if __name__ == '__main__':
     print(f"Variance of the deviations: {np.std(deviations)}")
     style.apply_global_style()
     plt.scatter(range(len(deviations)), deviations, **style.scatter_style)
-    plt.axhline(y=0.4, color='seagreen', linestyle='--', linewidth=1.95)
-    plt.title("Calculated deviations with decition boundary")
+    #plt.axhline(y=0.4, color='seagreen', linestyle='--', linewidth=1.95)
+    plt.title("Calculated deviations")
     plt.xlabel("Histogram index")
     plt.ylabel("Deviation")
     plt.show()
