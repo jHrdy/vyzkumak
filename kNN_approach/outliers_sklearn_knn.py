@@ -19,7 +19,7 @@ import plotting_styles as style
 #from ready_proj_data import norm_data_2d as norm_data
 #from ready_data import get_artifficial_dataset   # used for testing - call with no params a function to create dataset with 2 fake cols
 
-neigh = NearestNeighbors(n_neighbors=len(norm_data), metric=capped_metric) 
+neigh = NearestNeighbors(n_neighbors=len(norm_data)) 
 #neigh = NearestNeighbors(n_neighbors=len(norm_data)) 
 neigh.fit(norm_data)
 

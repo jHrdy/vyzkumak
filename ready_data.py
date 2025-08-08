@@ -73,4 +73,4 @@ norm_data = norm_data.T
 print('Working with', datafiles[file])
 
 if __name__ == '__main__':
-    print(norm_data[0])
+    print(len(norm_data))

@@ -17,8 +17,10 @@ there are multiple datasets for testing
 (deviations are derived from it)"""
 
 # TESTING values that are appended to deviations (in this script called dataset)
-'''dataset.append(12)
-dataset.append(11)
+dataset.append(1.9)
+#dataset.append(2.2)
+#dataset.append(0.99)
+'''dataset.append(11)
 dataset.append(14)
 dataset.append(0.95)
 dataset.append(0.97)
@@ -49,7 +51,7 @@ decision_boundary = (clusters[1]-clusters[0])/2
 outliers_cycle = {}
 
 n_epochs = 1
-
+"""
 while decision_boundary > 1:
     data_wo_outliers = {}
     for idx, (pt, label) in enumerate(zip(dataset, labels)):
@@ -66,7 +68,7 @@ while decision_boundary > 1:
     clusters = means.cluster_centers_
     decision_boundary = (clusters[1]-clusters[0])/2 
     n_epochs += 1
-
+"""
 print(f"Script executed in {n_epochs} epochs")
 dataset_np = np.array([x for x in dataset])
 
@@ -74,18 +76,20 @@ outs = [dataset.index(outlier) for outlier in dataset_np[dataset > decision_boun
 print(f"Outliers: {outs}")
 
 import plotting_styles as style
+style.apply_global_style()
+
 for idx, pt in enumerate(dataset):
     if pt >= decision_boundary:
-        plt.scatter(idx, pt, color='red', **style.scatter_style)        
+        plt.scatter(idx, pt, color='firebrick', **style.scatter_style)        
     else:
-        plt.scatter(idx, pt, color='green', **style.scatter_style)        
-
+        plt.scatter(idx, pt, color='darkgreen',**style.scatter_style)        
+plt.axhline(y=decision_boundary, color='seagreen', linestyle='--', linewidth=1.95)
 #plt.title("Data and outliers separated")
 #plt.plot(np.array([decision_boundary for _ in range(len(dataset))]), linestyle='dashed')
 #plt.show()
 #plt.scatter(range(len(dataset)), dataset, **style.scatter_style)
 #plt.axhline(y=0.4, color='seagreen', linestyle='--', linewidth=1.95)
-plt.title("Calculated deviations with decition boundary")
+plt.title("Calculated deviations with decision boundary")
 plt.xlabel("Histogram index")
 plt.ylabel("Deviation")
 plt.show()
