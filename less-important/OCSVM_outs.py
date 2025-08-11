@@ -16,19 +16,24 @@ from ready_data import norm_data
 def idxs(iterable):
     return [i for i in range(len(iterable))]
 
-svm = OneClassSVM(gamma="auto").fit(norm_data)
+svm = OneClassSVM().fit(norm_data)
 svm.predict(norm_data)
 out_measure = svm.score_samples(norm_data)
 dec = svm.decision_function(norm_data)
 apply_global_style()
-plt.plot(idxs(dec), dec)
+plt.plot(range(len(dec)), dec)
 plt.title("Decision function")
 plt.show()
 
 plt.title("Outlier score OCSVM")
 plt.scatter(range(len(out_measure)), out_measure, **style.scatter_style)
 style.apply_global_style()
+plt.xlabel("Histogram Index")
+plt.ylabel("Score")
 plt.show()
+print(max(out_measure))
+highest_devs = sorted(dev_dict:=enumerate(out_measure), key=lambda deviation: deviation[1], reverse=True)[-5:]
+print(highest_devs[::-1])
 exit()
 for m in range(len(out_measure)):
     # decided for decision boundary at 80 (not permanent just for testing)

@@ -19,7 +19,7 @@ import plotting_styles as style
 #from ready_proj_data import norm_data_2d as norm_data
 #from ready_data import get_artifficial_dataset   # used for testing - call with no params a function to create dataset with 2 fake cols
 
-neigh = NearestNeighbors(n_neighbors=len(norm_data)) 
+neigh = NearestNeighbors(n_neighbors=len(norm_data))
 #neigh = NearestNeighbors(n_neighbors=len(norm_data)) 
 neigh.fit(norm_data)
 
@@ -45,10 +45,12 @@ if __name__ == '__main__':
     style.apply_global_style()
     plt.scatter(range(len(deviations)), deviations, **style.scatter_style)
     #plt.axhline(y=0.4, color='seagreen', linestyle='--', linewidth=1.95)
-    plt.title("Calculated deviations")
+    plt.title(f"Calculated deviations")
     plt.xlabel("Histogram index")
     plt.ylabel("Deviation")
     plt.show()
+    highest_devs = sorted(dev_dict:=enumerate(deviations), key=lambda deviation: deviation[1], reverse=False)[-5:]
+    print(highest_devs[::-1])
     exit()
 
     # following code plots outlier count per k parameter
