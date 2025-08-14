@@ -15,11 +15,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from metrics import capped_metric, manhattan_metric, sigmoid_metric
 import plotting_styles as style
-
+import time
 #from ready_proj_data import norm_data_2d as norm_data
 #from ready_data import get_artifficial_dataset   # used for testing - call with no params a function to create dataset with 2 fake cols
 
-neigh = NearestNeighbors(n_neighbors=len(norm_data))
+start = time.perf_counter()
+
+neigh = NearestNeighbors(n_neighbors=len(norm_data), metric=sigmoid_metric)
 #neigh = NearestNeighbors(n_neighbors=len(norm_data)) 
 neigh.fit(norm_data)
 
@@ -32,11 +34,13 @@ for d in norm_data:
     neighborhood.append(dist)
 
 avg_distances = [np.mean(dist) for dist in neighborhood]
-avg_distances_copy = avg_distances.copy()
-
+#avg_distances_copy = avg_distances.copy() not necessary variable was excluded due to runtime time measurements 
+ 
 mean = np.mean(avg_distances)
 
 deviations = [abs(d-mean) for d in avg_distances]  
+end = time.perf_counter()
+print(f"Runtime length: {end - start:.5f}s")
 
 if __name__ == '__main__':
     # Std when using default metric     0.09005959896056492

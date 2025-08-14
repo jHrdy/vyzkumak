@@ -17,7 +17,7 @@ line_style = {
     "linewidth": 2.5,
     "linestyle": "-",
     "color": "#1f77b4",
-    "marker": "o",
+    #"marker": "o",
     "markersize": 6,
     "markerfacecolor": "white",
     "markeredgewidth": 1.5,

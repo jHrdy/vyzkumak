@@ -2,6 +2,7 @@ from sklearn.svm import OneClassSVM
 import matplotlib.pyplot as plt
 import sys
 from pathlib import Path
+import time
 
 current_dir = Path(__file__).resolve().parent
 parent_dir = current_dir.parent
@@ -15,10 +16,14 @@ from ready_data import norm_data
 
 def idxs(iterable):
     return [i for i in range(len(iterable))]
-
+start = time.perf_counter()
 svm = OneClassSVM().fit(norm_data)
 svm.predict(norm_data)
 out_measure = svm.score_samples(norm_data)
+
+end = time.perf_counter()
+print(f"Runtime length: {end - start:.5f}s")
+
 dec = svm.decision_function(norm_data)
 apply_global_style()
 plt.plot(range(len(dec)), dec)
