@@ -16,8 +16,9 @@ from ready_data import norm_data
 
 def idxs(iterable):
     return [i for i in range(len(iterable))]
+
 start = time.perf_counter()
-svm = OneClassSVM().fit(norm_data)
+svm = OneClassSVM(kernel='sigmoid').fit(norm_data)
 svm.predict(norm_data)
 out_measure = svm.score_samples(norm_data)
 
@@ -30,6 +31,8 @@ plt.plot(range(len(dec)), dec)
 plt.title("Decision function")
 plt.show()
 
+plt.xlabel("Index")
+plt.ylabel("Score")
 plt.title("Outlier score OCSVM")
 plt.scatter(range(len(out_measure)), out_measure, **style.scatter_style)
 style.apply_global_style()

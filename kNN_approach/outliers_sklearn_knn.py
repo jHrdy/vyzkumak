@@ -21,7 +21,7 @@ import time
 
 start = time.perf_counter()
 
-neigh = NearestNeighbors(n_neighbors=len(norm_data), metric=sigmoid_metric)
+neigh = NearestNeighbors(n_neighbors=len(norm_data))
 #neigh = NearestNeighbors(n_neighbors=len(norm_data)) 
 neigh.fit(norm_data)
 

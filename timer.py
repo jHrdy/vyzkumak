@@ -7,5 +7,3 @@ subprocess.run(["python", "outliers_sklearn_knn.py"], check=True)
 end = time.perf_counter()
 
 print(f"Runtime length: {end - start:.5f}s")
-
-import matplotlib as plt

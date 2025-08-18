@@ -17,7 +17,7 @@ there are multiple datasets for testing
 (deviations are derived from it)"""
 
 # TESTING values that are appended to deviations (in this script called dataset)
-dataset.append(1.9)
+#dataset.append(1.9)
 #dataset.append(2.2)
 #dataset.append(0.99)
 '''dataset.append(11)
@@ -46,7 +46,9 @@ for idx, (data, label) in enumerate(zip(dataset, labels)):
     if color_map[label] == 'red':
         outliers.append(idx)
 
-decision_boundary = (clusters[1]-clusters[0])/2 
+decision_boundary = np.mean(clusters)
+
+print(f'Computed decision boundary: {decision_boundary}')
 
 outliers_cycle = {}
 

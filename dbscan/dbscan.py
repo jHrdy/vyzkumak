@@ -37,12 +37,16 @@ for dist in range(1, 100, 1):
     
 distances = [i/10 for i in range(1, 100, 1)]
 import plotting_styles as styles
+from matplotlib.ticker import MaxNLocator
+
 styles.apply_global_style()
+
 plt.plot(distances, outlier_cnt, **styles.line_style)
 plt.title("Outliers per epsilon")
 plt.xlabel("Epsilon")
 plt.ylabel("Number of outliers")
 plt.xticks(np.arange(0, 11, 1))
+plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
 plt.show()
 
 outlier_cnt = []
@@ -55,6 +59,7 @@ plt.plot(range(1, 100, 1), outlier_cnt, **styles.line_style)
 plt.title("Outliers per minimum samples")
 plt.xlabel("Minimum samples")
 plt.ylabel("Outliers")
+plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
 plt.show()
 
 param_grid = {
