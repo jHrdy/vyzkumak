@@ -10,20 +10,20 @@ import matplotlib.pyplot as plt
 from pprint import pprint
 import os
 from sklearn.preprocessing import MinMaxScaler
-
+"""
 try:
-    datafiles = os.listdir('data/bm')
+    datafiles = os.listdir('data/ce')
 except:
     #print("Error: To properly run your script make sure you are located in same directory as ready_data.py and\n" \
     #"run script as such: python subdir/your-script.py")
     #exit()
-    datafiles = os.listdir('../data/bm')
-
-file = 1
-try:
-    olddata = pd.read_parquet(os.path.join('data','bm','old_data_BM01P1_hits.parquet'))  # hity v hodoskope
-except:
-    olddata = pd.read_parquet(os.path.join('..','data','bm','old_data_BM01P1_hits.parquet'))  # hity v hodoskope
+    datafiles = os.listdir('../data/ce')
+"""
+file = 0
+#try:
+#    olddata = pd.read_parquet(os.path.join('data','bm','old_data_BM01P1_hits.parquet'))  # hity v hodoskope
+#except:
+#    olddata = pd.read_parquet(os.path.join('..','data','bm','old_data_BM01P1_hits.parquet'))  # hity v hodoskope
 def plothist(data, num):
     idxs = [i for i in range(len(data))]
     plt.bar(idxs, data[num], width=0.8)
@@ -32,12 +32,13 @@ def plothist(data, num):
 
 #data_BM01 = normalize_data(pd.read_parquet(os.path.join('..','data','data_BM01P1_hits.parquet')).T)
 
-#data = pd.read_parquet(os.path.join('data','data_BM01P1_hits.parquet')).T
+data = pd.read_parquet(os.path.join('data','ce','data_CE01P1_hits.parquet')).T
+"""
 try:
     data = pd.read_parquet(os.path.join('data','bm', datafiles[file])).T
 except:
     data = pd.read_parquet(os.path.join('..', 'data', 'bm', datafiles[file])).T
-
+"""
 data_cp = data.copy()
 
 # artifficial data currently works only for data_BM01P1_hits.parquet
@@ -70,7 +71,7 @@ scaler = MinMaxScaler()
 norm_data = scaler.fit_transform(data)
 
 norm_data = norm_data.T
-print('Working with', datafiles[file])
+#print('Working with', datafiles[file])
 
 if __name__ == '__main__':
     print(len(norm_data))
