@@ -77,7 +77,7 @@ dataset_np = np.array([x for x in dataset])
 outs = [dataset.index(outlier) for outlier in dataset_np[dataset > decision_boundary]]
 print(f"Outliers: {outs}")
 
-import plotting_styles as style
+import src.plotting_styles as style
 style.apply_global_style()
 
 for idx, pt in enumerate(dataset):

@@ -8,10 +8,10 @@ sys.path.append(str(parent_dir))
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from ready_data import norm_data
-
+from src.ready_data import norm_data
 from sklearn.cluster import DBSCAN
 import time
+
 start = time.perf_counter()
 dcscan = DBSCAN()
 output = dcscan.fit_predict(norm_data)
@@ -36,7 +36,7 @@ for dist in range(1, 100, 1):
     outlier_cnt.append(sum([1 for i in output if i == -1])) 
     
 distances = [i/10 for i in range(1, 100, 1)]
-import plotting_styles as styles
+import src.plotting_styles as styles
 from matplotlib.ticker import MaxNLocator
 
 styles.apply_global_style()

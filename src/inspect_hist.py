@@ -2,7 +2,7 @@
 # !!! Currently implemented only for n_bin = 20 (thus wont work for any other types of histograms)
 
 import matplotlib.pyplot as plt
-from ready_data import norm_data, data
+from src.ready_data import norm_data, data
 #from ready_proj_data import norm_data_2d as data
 
 def plot_hist(hist_num):

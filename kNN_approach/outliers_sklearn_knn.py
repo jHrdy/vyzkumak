@@ -9,12 +9,12 @@ current_dir = Path(__file__).resolve().parent
 parent_dir = current_dir.parent
 sys.path.append(str(parent_dir))
 
-from ready_data import norm_data
+from src.ready_data import norm_data
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import matplotlib.pyplot as plt
-from metrics import capped_metric, manhattan_metric, sigmoid_metric
-import plotting_styles as style
+from src.metrics import capped_metric, manhattan_metric, sigmoid_metric
+import src.plotting_styles as style
 import time
 #from ready_proj_data import norm_data_2d as norm_data
 #from ready_data import get_artifficial_dataset   # used for testing - call with no params a function to create dataset with 2 fake cols

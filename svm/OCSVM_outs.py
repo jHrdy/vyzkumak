@@ -9,9 +9,9 @@ parent_dir = current_dir.parent
 
 sys.path.append(str(parent_dir))
 
-import plotting_styles as style
-from plotting_styles import apply_global_style
-from ready_data import norm_data
+import src.plotting_styles as style
+from src.plotting_styles import apply_global_style
+from src.ready_data import norm_data
 #from ready_proj_data import norm_data_2d as norm_data
 
 def idxs(iterable):
@@ -19,7 +19,8 @@ def idxs(iterable):
 
 start = time.perf_counter()
 svm = OneClassSVM(kernel='sigmoid').fit(norm_data)
-svm.predict(norm_data)
+svm.fit_predict(norm_data)
+prediction = svm.predict(norm_data)
 out_measure = svm.score_samples(norm_data)
 
 end = time.perf_counter()
