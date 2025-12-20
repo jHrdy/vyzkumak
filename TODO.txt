@@ -1,10 +1,1 @@
-kNN
-    - Vyskusat viac metrik v knn pristupe
-    - ukazat ako si knn poradi s fake data
-
-DBSCAN
-    - Vyskusat rozne parametre v dbscan
-
-LOF
-    - mozno skusit rozbehat
 
