@@ -5,3 +5,5 @@ self_testing
 sources-read.txt
 text_notes+history
 mlenv
+autoencoders_tutorial.ipynb
+GANs/__pycache__

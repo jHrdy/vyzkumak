@@ -1,10 +1,19 @@
 from pathlib import Path
 import numpy as np
 
-def load_dataset(data_dir):
-    #data_dir = "data\\FJ\\FI01X1\\FI01X1_ch"
+datasets = {
+    "SI" : "..\\data\\SI\\SI01U1\\SI01U1_ch",
+    "FJ" : "..\\data\\FJ\\FI01X1\\FI01X1_ch",
+    "PA" : "..\\data\\MWPC\\PA01U1\\PA01U1_ch"
+}
 
-    dataset_dir = Path(data_dir)
+def load_dataset(dataset_name):
+
+    if dataset_name not in datasets.keys():
+        raise KeyError(f"No dataset names {dataset_name}")
+    else:
+        dataset_dir = Path(datasets[dataset_name])
+    print(dataset_dir)
     files = sorted(dataset_dir.glob("*.npz"))
     if not files:
         raise RuntimeError("No .npz files found")

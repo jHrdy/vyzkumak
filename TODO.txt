@@ -1,1 +1,10 @@
+Semi-supervised model training
+ - have three different models 
+    - AE DONE (almost) - look at Sam's AE
+    - VAE 
+    - GAN in progress
 
+ - create ARTIFICIAL outliers within each of them
+ - test recall and precision
+ 
+ add comments to the src
