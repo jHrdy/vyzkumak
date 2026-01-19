@@ -2,8 +2,9 @@ from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import Dataset
 import torch 
 import matplotlib.pyplot as plt
+import numpy as np
 
-def prepocess_data(dataset):
+def prepocess_data(dataset) -> torch.tensor:
 
     scaler = MinMaxScaler()
     dataset = scaler.fit_transform(dataset)
@@ -12,7 +13,7 @@ def prepocess_data(dataset):
     
     return torch_df
 
-def train_ae(n_epochs, dataloader, model, optimizer, criterion):
+def train_ae(n_epochs, dataloader, model, optimizer, criterion) -> tuple[np.ndarray, torch.nn.Module]:
     
     losses = []
     for _ in range(n_epochs):

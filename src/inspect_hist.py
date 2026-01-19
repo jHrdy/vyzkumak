@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 from src.ready_data import norm_data, data
 #from ready_proj_data import norm_data_2d as data
 
-def plot_hist(hist_num):
+def plot_hist(hist_num, n_bins=20):
 
     if hist_num < 0:
        return False
     
     plt.figure(figsize=(10, 5))
-    plt.bar(x:=range(20), data[hist_num], color='blue', alpha=0.7)
+    plt.bar(x:=range(n_bins), data[hist_num], color='blue', alpha=0.7)
 
     plt.xlabel("Bin")
     plt.ylabel("Value")
