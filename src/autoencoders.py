@@ -76,7 +76,7 @@ def train_ae(n_epochs, dataloader, model, val_loader, optimizer, criterion) -> t
 
         epoch_val_loss /= len(val_loader)
         val_losses.append(epoch_val_loss)
-
+        model.train()
     return train_losses, val_losses, model
 
 class HistDataset(Dataset):

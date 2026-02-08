@@ -7,3 +7,5 @@ text_notes+history
 mlenv
 autoencoders_tutorial.ipynb
 GANs/__pycache__
+plots/
+random_tests/

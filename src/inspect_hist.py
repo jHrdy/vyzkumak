@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from src.ready_data import norm_data, data
 #from ready_proj_data import norm_data_2d as data
 
-def plot_hist(hist_num, n_bins=20):
+def plot_hist(data, hist_num, n_bins=20):
 
     if hist_num < 0:
        return False
@@ -15,7 +15,7 @@ def plot_hist(hist_num, n_bins=20):
 
     plt.xlabel("Bin")
     plt.ylabel("Value")
-    plt.title(f"Histogram plot for pt. {hist_num}")
+    #plt.title(f"Histogram plot for pt. {hist_num}")
     plt.xticks(x) 
 
     plt.show()
