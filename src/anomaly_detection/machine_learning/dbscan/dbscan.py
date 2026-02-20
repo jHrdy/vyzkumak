@@ -1,10 +1,6 @@
 from pathlib import Path
 import sys
 
-current_dir = Path(__file__).resolve().parent
-parent_dir = current_dir.parent
-sys.path.append(str(parent_dir))
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -89,7 +85,6 @@ import seaborn as sns
 
 df = pd.DataFrame(results)
 
-# Heatmapa – bez gridu, vysoký kontrast
 """
 for el in results:
     if el['outliers'] > 2:
@@ -114,12 +109,11 @@ ax = sns.heatmap(
     linecolor=None
 )
 
-# Otočenie Y osi (aby malé min_samples boli dole)
 ax.invert_yaxis()
 
-# Nastavenie redších tickov
+
 y_ticks = ax.get_yticks()
-ax.set_yticks(y_ticks[::5])  # každý 5. tick
+ax.set_yticks(y_ticks[::5]) 
 ax.set_yticklabels([int(label) for label in ax.get_yticks()])
 
 pos_065 = heatmap_data.columns.get_indexer([0.65], method="nearest")[0]
@@ -128,7 +122,7 @@ pos_095 = heatmap_data.columns.get_indexer([1], method="nearest")[0]
 plt.axvline(x=pos_065, color="white", linewidth=1)
 plt.axvline(x=pos_095, color="white", linewidth=1)
 
-# Osi a titulok
+
 plt.ylabel("Minimum samples")
 plt.xlabel("Epsilon")
 plt.title("DBSCAN Outlier Count Heatmap", fontsize=14, pad=9)
