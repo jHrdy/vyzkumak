@@ -1,7 +1,6 @@
 import torch
 import numpy as np
-
-
+from copy import deepcopy
 
 class HistGenerator:
     def __init__(self, n_bins : int):
@@ -24,13 +23,13 @@ class HistGenerator:
         return torch.tensor(np.mean(real_hists, axis=0))
     
     def zig_zag_rand(self, zero_indexes, one_indexes, real_sample):
-        if real_sample.numel() != self.n_bins:
+        if len(real_sample) != self.n_bins:
             raise ValueError("Invalid input length")
 
         if max(zero_indexes, default=-1) >= self.n_bins or max(one_indexes, default=-1) >= self.n_bins:
             raise ValueError("Index out of range")
 
-        result = real_sample.clone()
+        result = deepcopy(real_sample)
 
         if zero_indexes:
             result[zero_indexes] = 0

@@ -1,6 +1,7 @@
 import torch.nn as nn
 
 class LinAutoencoder(nn.Module):
+    checkpoint = "lin_autoenc_v1.pth"
     def __init__(self):
         """This model architecture corresponds to ae_saved/lin_autoenc_v1.pth"""
         super().__init__()
