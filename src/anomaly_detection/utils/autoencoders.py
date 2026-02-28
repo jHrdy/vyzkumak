@@ -1,6 +1,7 @@
 from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import Dataset
 import torch 
+import torch.nn as nn
 import matplotlib.pyplot as plt
 import numpy as np
 from anomaly_detection.config import paths
@@ -135,9 +136,56 @@ def eval_and_plot_score(model, dataloader, criterion):
     with torch.no_grad():
         for batch in dataloader:
             preds = model(batch)
-            loss = criterion(preds, batch)           # shape: (B, C, L)
-            #loss_per_sample = loss.mean(dim=(1,2))   # shape: (B,)
+            loss = criterion(preds, batch)      
             scores.extend(loss.cpu().numpy())
 
     return scores
 
+
+def visualize_reconstruction(model, dataset, idx, device='cpu') -> None:
+    model.eval()
+
+    if device is None:
+        device = next(model.parameters()).device
+
+    with torch.no_grad():
+        x = dataset[idx].to(device)
+        pred = model(x)
+
+        criterion = nn.MSELoss()
+        loss = criterion(pred, x).item()
+
+    original = x.squeeze().cpu().numpy()
+    reconstructed = pred.squeeze().cpu().numpy()
+
+    _, axes = plt.subplots(1, 2, figsize=(12, 4))
+
+    axes[0].bar(range(len(original)), original, zorder=1, color='royalblue')
+    axes[0].set_title(f"Original histogram (index: {idx})")
+    axes[0].set_xlabel("Bin")
+    axes[0].set_ylabel("Value")
+
+    axes[1].bar(range(len(reconstructed)), reconstructed, zorder=1, color='royalblue')
+    axes[1].set_title(f"Reconstructed histogram (index: {idx})")
+    axes[1].set_xlabel("Bin")
+    axes[1].set_ylabel("Value")
+
+    plt.tight_layout()
+    plt.show()
+
+    print(f"MSE loss: {loss:.6f}")
+
+def count_num_of_reconstructions(model, dataset) -> int:
+    
+    preds = list()
+
+    with torch.no_grad():
+        for _, data in enumerate(dataset):
+            pred = model(data).numpy()
+            
+            for p in preds:
+                if pred.all() == p.all():
+                    break
+            else:
+                preds.append(pred)
+    return len(preds)
