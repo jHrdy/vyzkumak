@@ -3,6 +3,9 @@ from torch.utils.data import Dataset
 import torch 
 import matplotlib.pyplot as plt
 import numpy as np
+from anomaly_detection.config import paths
+import time
+import os 
 
 def drop_empty_histograms(df) -> np.ndarray:
     zero_pts = []
@@ -48,16 +51,30 @@ def prepocess_data(dataset) -> torch.tensor:
     
     return torch_df
 
-def train_ae(n_epochs, dataloader, model, val_loader, optimizer, criterion) -> tuple[np.ndarray, np.ndarray, torch.nn.Module]:
+def train_ae(n_epochs, dataloader, model, val_loader, optimizer, criterion, add_regularization=False, lam=0.001, save_checkpoints=False, saving_after_epoch=20, model_name=None, input_dim=None, latent_dim=None) -> tuple[np.ndarray, np.ndarray, torch.nn.Module]:
+    
+    if save_checkpoints and not model_name:
+        raise ValueError("If you wish to save checkpoints during training please insert model name via model_name param")
+    
+    if save_checkpoints and not input_dim:
+        raise ValueError("If you wish to save checkpoints during training please insert input dimension via input_dim param")
+    
+    if save_checkpoints and not latent_dim:
+        raise ValueError("If you wish to save checkpoints during training please insert latent dimension via latent_dim param")    
     
     train_losses = []
     val_losses = []
+
+    folder_name_for_checkpoints = f"{model_name}_train_date={time.strftime("%d-%m_%H-%M")}"
     
-    for _ in range(n_epochs):
-        epoch_loss = 0.0
+    model.train()
+    epoch_loss = 0.0
+    for ep in range(n_epochs):
         for pt in dataloader:
+            optimizer.zero_grad()
             recreated = model(pt)
-            loss = criterion(pt, recreated)
+            reg_loss = sum(p.pow(2).sum() for p in model.parameters()) if add_regularization else 0
+            loss = criterion(recreated, pt) + lam * reg_loss
             loss.backward()
             optimizer.step()
             epoch_loss += loss.item()
@@ -71,12 +88,28 @@ def train_ae(n_epochs, dataloader, model, val_loader, optimizer, criterion) -> t
         with torch.no_grad():
             for x in val_loader:
                 out = model(x)
+                #reg_loss = sum(p.pow(2).sum() for p in model.parameters()) if add_regularization else 0
                 loss = criterion(out, x)
                 epoch_val_loss += loss.item()
 
         epoch_val_loss /= len(val_loader)
+        minimal_val_loss = min(val_losses) if len(val_losses) > 0 else epoch_loss
         val_losses.append(epoch_val_loss)
-        model.train()
+
+        if save_checkpoints and ep > saving_after_epoch:
+            if epoch_val_loss < minimal_val_loss:
+                os.makedirs(os.path.join(paths.CHECKPOINT_DIR,folder_name_for_checkpoints), exist_ok=True)
+                torch.save({
+                    "model_state_dict": model.state_dict(),
+                    "config": {
+                        "input_dim": input_dim,
+                        "latent_dim": latent_dim,
+                    },
+                    "val_loss": epoch_loss
+                }, f"{os.path.join(paths.CHECKPOINT_DIR, folder_name_for_checkpoints)}/{model_name}_ep{ep}.pth")
+                print(f"[Checkpoint created] saved weights in epoch: {ep}")
+        
+
     return train_losses, val_losses, model
 
 class HistDataset(Dataset):
