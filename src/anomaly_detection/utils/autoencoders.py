@@ -175,17 +175,3 @@ def visualize_reconstruction(model, dataset, idx, device='cpu') -> None:
 
     print(f"MSE loss: {loss:.6f}")
 
-def count_num_of_reconstructions(model, dataset) -> int:
-    
-    preds = list()
-
-    with torch.no_grad():
-        for _, data in enumerate(dataset):
-            pred = model(data).numpy()
-            
-            for p in preds:
-                if pred.all() == p.all():
-                    break
-            else:
-                preds.append(pred)
-    return len(preds)
