@@ -20,7 +20,7 @@ class Scorer(ABC):
             raise ValueError(f"Input vectors must have matching dimensions but instead got x: {x.shape}, y: {y.shape}")
 
     @abstractmethod
-    def score(x,y):
+    def score(x : torch.Tensor, y : torch.Tensor):
         pass
 
     def __call__(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
@@ -54,7 +54,7 @@ class VarianceScorer(Scorer):
         return weighted_error.sum()
     
 class QuantileScorer(Scorer):
-    def __init__(self, q=0.9):
+    def __init__(self, q : float =0.9):
         self.q = q
 
     def score(self, x, y):

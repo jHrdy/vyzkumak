@@ -7,8 +7,9 @@ import numpy as np
 from anomaly_detection.config import paths
 import time
 import os 
+from collections.abc import Iterable
 
-def drop_empty_histograms(df) -> np.ndarray:
+def drop_empty_histograms(df : np.ndarray) -> np.ndarray:
     zero_pts = []
     for idx, data in enumerate(df):
         if data.any() == np.zeros(96).any(): 
@@ -18,7 +19,7 @@ def drop_empty_histograms(df) -> np.ndarray:
     print(f'Dropped indexes {zero_pts}')
     return dataset_no_outs
 
-def minmax_scale_per_sample(X):
+def minmax_scale_per_sample(X : np.ndarray | torch.Tensor):
     is_torch = isinstance(X, torch.Tensor)
     
     if is_torch:
@@ -43,7 +44,7 @@ def minmax_scale_per_sample(X):
                 X_scaled.append((x - x_min) / (x_max - x_min))
         return np.stack(X_scaled)
 
-def prepocess_data(dataset) -> torch.tensor:
+def prepocess_data(dataset : np.ndarray) -> torch.Tensor:
 
     scaler = MinMaxScaler()
     dataset = scaler.fit_transform(dataset)
@@ -52,7 +53,7 @@ def prepocess_data(dataset) -> torch.tensor:
     
     return torch_df
 
-def train_ae(n_epochs, dataloader, model, val_loader, optimizer, criterion, add_regularization=False, lam=0.001, save_checkpoints=False, saving_after_epoch=20, model_name=None, input_dim=None, latent_dim=None) -> tuple[np.ndarray, np.ndarray, torch.nn.Module]:
+def train_ae(n_epochs : int, dataloader : torch.utils.data.DataLoader, model : torch.nn.Module, val_loader : torch.utils.data.DataLoader, optimizer : torch.optim, criterion : function, add_regularization : bool = False, lam : float = 0.001, save_checkpoints : bool = False, saving_after_epoch : int = 20, model_name : str = None, input_dim : int = None, latent_dim : int = None) -> tuple[np.ndarray, np.ndarray, torch.nn.Module]:
     
     if save_checkpoints and not model_name:
         raise ValueError("If you wish to save checkpoints during training please insert model name via model_name param")
@@ -120,7 +121,7 @@ class HistDataset(Dataset):
     def __len__(self):
         return len(self.df)
     
-    def __getitem__(self, idx):
+    def __getitem__(self, idx : int):
         x = self.df[idx]
 
         if not torch.is_tensor(x):
@@ -129,7 +130,7 @@ class HistDataset(Dataset):
         x = x.unsqueeze(0)
         return x
     
-def eval_and_plot_score(model, dataloader, criterion):
+def eval_and_plot_score(model : torch.nn.Module, dataloader : torch.utils.data.DataLoader, criterion : function) -> list:
     model.eval()
     scores = []
 
@@ -142,7 +143,7 @@ def eval_and_plot_score(model, dataloader, criterion):
     return scores
 
 
-def visualize_reconstruction(model, dataset, idx, device='cpu') -> None:
+def visualize_reconstruction(model : torch.nn.Module , dataset : Iterable, idx : int, device='cpu') -> None:
     model.eval()
 
     if device is None:
@@ -174,4 +175,3 @@ def visualize_reconstruction(model, dataset, idx, device='cpu') -> None:
     plt.show()
 
     print(f"MSE loss: {loss:.6f}")
-
