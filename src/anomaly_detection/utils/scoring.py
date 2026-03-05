@@ -23,7 +23,7 @@ class Scorer(ABC):
     def score(x : torch.Tensor, y : torch.Tensor):
         pass
 
-    def __call__(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+    def __call__(self, x: torch.Tensor, y: torch.Tensor, *args) -> torch.Tensor:
         self._validate(x)
         self._validate(y)
         self._check_dimensions(x, y)
@@ -65,3 +65,26 @@ class MaxErrorScorer(Scorer):
         pass
     def score(self, x, y):
         return torch.tensor(np.max(np.abs(x-y)))
+    
+class ReconstructionConsistencyScorer(Scorer):
+    def __init__(self, encoder=None, decoder=None):
+        if encoder is None or decoder is None:
+            raise ValueError("Encoder and Decoder must be passed to the constructor")
+        
+        self.enc = encoder
+        self.dec = decoder
+    
+    def score(self, x, y=None):
+        x_dim = x.shape[-1]
+        z = self.enc(x.reshape(1, 1, x_dim)).detach()
+        x_hat = self.dec(z).detach()
+        z_twice_encoded = self.enc(x_hat).detach()
+        return torch.tensor(np.linalg.norm(z - z_twice_encoded))
+    
+if __name__ == '__main__':
+    scorer = QuantileScorer(0.97)
+    vec = [5, 4, 6, 7, 1, 9]
+    vec = np.array([1, 2, 4, 0])
+    vec_2 = np.array([1, 2, 5, 100])
+    print(np.quantile(np.abs(vec-vec_2), 0.8))
+
