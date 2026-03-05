@@ -1,4 +1,3 @@
-from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import Dataset
 import torch 
 import torch.nn as nn
@@ -44,16 +43,7 @@ def minmax_scale_per_sample(X : np.ndarray | torch.Tensor):
                 X_scaled.append((x - x_min) / (x_max - x_min))
         return np.stack(X_scaled)
 
-def prepocess_data(dataset : np.ndarray) -> torch.Tensor:
-
-    scaler = MinMaxScaler()
-    dataset = scaler.fit_transform(dataset)
-    torch_df = torch.from_numpy(dataset)
-    torch_df = torch_df.to(torch.float32)
-    
-    return torch_df
-
-def train_ae(n_epochs : int, dataloader : torch.utils.data.DataLoader, model : torch.nn.Module, val_loader : torch.utils.data.DataLoader, optimizer : torch.optim, criterion : function, add_regularization : bool = False, lam : float = 0.001, save_checkpoints : bool = False, saving_after_epoch : int = 20, model_name : str = None, input_dim : int = None, latent_dim : int = None) -> tuple[np.ndarray, np.ndarray, torch.nn.Module]:
+def train_ae(n_epochs : int, dataloader : torch.utils.data.DataLoader, model : torch.nn.Module, val_loader : torch.utils.data.DataLoader, optimizer : torch.optim, criterion, add_regularization : bool = False, lam : float = 0.001, save_checkpoints : bool = False, saving_after_epoch : int = 20, model_name : str = None, input_dim : int = None, latent_dim : int = None) -> tuple[np.ndarray, np.ndarray, torch.nn.Module]:
     
     if save_checkpoints and not model_name:
         raise ValueError("If you wish to save checkpoints during training please insert model name via model_name param")
@@ -130,7 +120,7 @@ class HistDataset(Dataset):
         x = x.unsqueeze(0)
         return x
     
-def eval_and_plot_score(model : torch.nn.Module, dataloader : torch.utils.data.DataLoader, criterion : function) -> list:
+def eval_and_plot_score(model : torch.nn.Module, dataloader : torch.utils.data.DataLoader, criterion) -> list:
     model.eval()
     scores = []
 
