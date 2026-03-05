@@ -59,7 +59,24 @@ class QuantileScorer(Scorer):
 
     def score(self, x, y):
         return torch.tensor(np.quantile(np.abs(x - y), q=self.q))
+
+class CumulativeQuantileScorer(Scorer):
+    def __init__(self, q: float = 0.9):
+        self.q = q
+
+    def score(self, x, y):
+        # Calculate element-wise absolute residuals
+        residuals = np.abs(x.cpu().numpy() - y.cpu().numpy())
         
+        # Determine the value at the q-th quantile
+        threshold = np.quantile(residuals, q=self.q)
+        
+        # Select all residuals that are greater than or equal to the threshold
+        tail_residuals = residuals[residuals >= threshold]
+        
+        # Return the mean of these tail values as the anomaly score
+        return torch.tensor(np.mean(tail_residuals))
+
 class MaxErrorScorer(Scorer):
     def __init__(self):
         pass
