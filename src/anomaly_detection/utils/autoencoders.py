@@ -87,6 +87,9 @@ def train_ae(n_epochs : int, dataloader : torch.utils.data.DataLoader, model : t
         epoch_val_loss /= len(val_loader)
         minimal_val_loss = min(val_losses) if len(val_losses) > 0 else epoch_loss
         val_losses.append(epoch_val_loss)
+        
+        if ep % 25 == 0:
+            print(f"Ep [{ep} / {n_epochs}]: Train loss {epoch_loss} | test loss {epoch_val_loss}") 
 
         if save_checkpoints and ep > saving_after_epoch:
             if epoch_val_loss < minimal_val_loss:

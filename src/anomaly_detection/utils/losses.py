@@ -9,8 +9,6 @@ def wasserstein_1d_loss(p: torch.Tensor, q: torch.Tensor, eps: float = 1e-8):
     # normalize to probability distributions
     p = p / (p.sum(dim=-1, keepdim=True) + eps)
     q = q / (q.sum(dim=-1, keepdim=True) + eps)
-    print("p", (p.sum(dim=-1, keepdim=True) + eps))
-    print("p", (q.sum(dim=-1, keepdim=True) + eps))
 
     # cumulative distribution functions
     cdf_p = torch.cumsum(p, dim=-1)
