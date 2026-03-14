@@ -1,3 +1,5 @@
+import numpy as np
+
 scatter_style = {
     "s": 60,
     #"color": 'royalblue',   #"blue", #navy
@@ -34,6 +36,29 @@ def apply_global_style():
         "axes.labelsize": 14,
         "axes.titlesize": 16
     })
+
+def plot_comparison_w_heatmap(original, recreation, colormap='bwr'):
+    
+    residuals = np.abs(original - recreation)
+
+    _, axes = plt.subplots(1, 2, figsize=(12, 4))
+    
+    cmap = plt.get_cmap(colormap)
+    colors = cmap(residuals)
+
+    axes[0].bar(range(len(original)), original, zorder=1, color=colors)
+    axes[0].set_title(f"Original histogram (index: )")
+    axes[0].set_xlabel("Bin")
+    axes[0].set_ylabel("Value")
+
+    axes[1].bar(range(len(recreation)), recreation, zorder=1, color='royalblue')
+    axes[1].set_title(f"Reconstructed histogram (index:)")
+    axes[1].set_xlabel("Bin")
+    axes[1].set_ylabel("Value")
+
+    plt.tight_layout()
+    plt.show()
+
 
 if __name__ == '__main__':
     
