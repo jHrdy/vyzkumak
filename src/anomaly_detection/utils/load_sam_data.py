@@ -1,12 +1,12 @@
 from pathlib import Path
 import numpy as np
 import os
-import anomaly_detection.config.paths as paths
+from anomaly_detection.config.paths import DATA_DIR
 
 datasets = {
-    "SI" : f"{paths.DATA_DIR}\\SI\\SI01U1\\SI01U1_ch",
-    "FJ" : f"{paths.DATA_DIR}\\FJ\\FI01X1\\FI01X1_ch",
-    "PA" : f"{paths.DATA_DIR}\\MWPC\\PA01U1\\PA01U1_ch"
+    "SI" : DATA_DIR / "SI" / "SI01U1" / "SI01U1_ch",
+    "FJ" : DATA_DIR / "FJ" / "FI01X1" / "FI01X1_ch",
+    "PA" : DATA_DIR / "MWPC" / "PA01U1" / "PA01U1_ch"
 }
 
 def load_dataset(dataset_name):
