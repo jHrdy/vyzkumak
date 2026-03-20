@@ -48,10 +48,10 @@ class VarianceScorer(Scorer):
 
         self._check_dimensions(x, self.variances)
 
-        squared_error = (x - y) ** 2
-        weighted_error = squared_error / self.variances
+        #squared_error = (x - y) ** 2
+        #weighted_error = squared_error / self.variances
 
-        return weighted_error.sum()
+        return torch.sqrt(((x - y) ** 2 / self.variances).sum(dim=1))
     
 class QuantileScorer(Scorer):
     def __init__(self, q : float =0.9):
