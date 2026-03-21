@@ -18,3 +18,12 @@ class Wasserstein1DLoss(nn.Module):
         # W1 distance
         loss = torch.mean(torch.abs(cdf_p - cdf_q).sum(dim=-1))
         return loss
+    
+class HyperSphereLoss(nn.Module):
+    def __init__(self, center):
+        super().__init__()
+        self.c = center.detach()
+
+    def forward(self, x):
+        dist = torch.sum((x - self.c) ** 2, dim=1)
+        return torch.mean(dist)
