@@ -22,7 +22,7 @@ def plot_hist(data, hist_num, n_bins=20):
     plt.show()
     return True
 
-def plot_original_and_reconstructed(model, full_dataset, idx=None):
+def plot_original_and_reconstructed(model, full_dataset, idx=None, title=''):
     if idx is None:
         idx = random.randint(0, len(full_dataset))
 
@@ -34,12 +34,12 @@ def plot_original_and_reconstructed(model, full_dataset, idx=None):
     fig, axes = plt.subplots(1, 2, figsize=(12, 4))
 
     axes[0].bar(range(len(pred)), full_dataset[idx].squeeze(), zorder=1, color='royalblue')
-    axes[0].set_title(f"Original histogram (index: {idx})")
+    axes[0].set_title(f"Original histogram {title} (index: {idx})")
     axes[0].set_xlabel("Bin")
     axes[0].set_ylabel("Value")
 
     axes[1].bar(range(len(pred)), pred, zorder=1, color='royalblue')
-    axes[1].set_title(f"Recreated histogram (index: {idx})")
+    axes[1].set_title(f"Recreated histogram {title} (index: {idx})")
     axes[1].set_xlabel("Bin")
     axes[1].set_ylabel("Value")
     plt.tight_layout()
